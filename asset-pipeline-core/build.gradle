@@ -14,7 +14,7 @@ apply plugin: 'groovy'
 apply plugin: 'maven-publish'
 apply plugin: 'idea'
 
-group = 'com.bertramlabs.plugins'
+group = 'org.graceframework.plugins'
 sourceCompatibility = '1.11'
 targetCompatibility = '1.11'
 
@@ -83,11 +83,11 @@ publishing {
 					resolveStrategy = Closure.DELEGATE_FIRST
 					name 'asset-pipeline-core'
 					description 'JVM Asset Pipeline library for serving static web assets, bundling, minifying, and extensibility for transpiling.'
-					url 'https://github.com/bertramdev/asset-pipeline-core'
+					url 'https://github.com/grace-plugins/asset-pipeline'
 					scm {
-						url 'https://github.com/bertramdev/asset-pipeline-core'
-						connection 'scm:https://bertramdev@github.com/bertramdev/asset-pipeline-core.git'
-						developerConnection 'scm:git://github.com/bertramdev/asset-pipeline-core.git'
+						url 'https://github.com/grace-plugins/asset-pipeline'
+						connection 'scm:https://bertramdev@github.com/grace-plugins/asset-pipeline.git'
+						developerConnection 'scm:git://github.com/grace-plugins/asset-pipeline.git'
 					}
 					licenses {
 						license {
@@ -101,6 +101,11 @@ publishing {
 							id 'davydotcom'
 							name 'David Estes'
 							email 'davydotcom@gmail.com'
+						}
+						developer {
+							id 'rainboyan'
+							name 'Michael Yan'
+							email 'rain@rainboyan.com'
 						}
 					}
 				}

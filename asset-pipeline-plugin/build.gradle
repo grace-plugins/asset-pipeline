@@ -4,7 +4,6 @@ buildscript {
     }
     repositories {
         mavenLocal()
-        jcenter()
         maven { url "https://repo.grails.org/grails/core" }
     }
     dependencies {
@@ -14,7 +13,7 @@ buildscript {
 
 
 
-group "com.bertramlabs.plugins"
+group "org.graceframework.plugins"
 
 // apply plugin: 'maven-publish'
 apply plugin: 'eclipse'
@@ -43,7 +42,6 @@ java {
 
 repositories {
     mavenLocal()
-    jcenter()
     mavenCentral()
     maven { url "https://repo.grails.org/grails/core" }
 }
@@ -62,17 +60,17 @@ grails {
 publishing {
     publications {
         maven(MavenPublication) {
-            artifactId 'asset-pipeline-grails'
+            artifactId 'asset-pipeline-plugin'
             pom.withXml {
                 asNode().children().last() + {
                     resolveStrategy = Closure.DELEGATE_FIRST
                     name 'asset-pipeline-grails'
-                    description 'The Grails Asset-Pipeling plugin providing asset transpiling to grails.'
-                    url 'https://github.com/bertramdev/asset-pipeline-core'
+                    description 'The Grace Asset-Pipeling plugin providing asset transpiling to grace.'
+                    url 'https://github.com/grace-plugins/asset-pipeline'
                     scm {
-                        url 'https://github.com/bertramdev/asset-pipeline-core'
-                        connection 'scm:https://bertramdev@github.com/bertramdev/asset-pipeline-core.git'
-                        developerConnection 'scm:git://github.com/bertramdev/asset-pipeline-core.git'
+                        url 'https://github.com/grace-plugins/asset-pipeline'
+                        connection 'scm:https://bertramdev@github.com/grace-plugins/asset-pipeline.git'
+                        developerConnection 'scm:git://github.com/grace-plugins/asset-pipeline.git'
                     }
                     licenses {
                         license {
@@ -87,6 +85,11 @@ publishing {
                             name 'David Estes'
                             email 'davydotcom@gmail.com'
                         }
+						developer {
+							id 'rainboyan'
+							name 'Michael Yan'
+							email 'rain@rainboyan.com'
+						}
                     }
                 }
             }
@@ -116,16 +119,15 @@ dependencies {
     compileOnly "org.springframework.boot:spring-boot-autoconfigure"
     compileOnly "org.springframework.boot:spring-boot-starter-tomcat"
 
-    compileOnly "org.grails:grails-web-boot"
-    compileOnly "org.grails:grails-dependencies"
+    compileOnly "org.graceframework:grace-boot:$graceVersion"
     compileOnly 'javax.servlet:javax.servlet-api:3.1.0'
     implementation project(':asset-pipeline-core'), {
         exclude group:'org.mozilla', module:'rhino'
         exclude group:'com.google.javascript', module:'closure-compiler-unshaded'
     }
-    testImplementation('org.grails:grails-web-testing-support')
+    testImplementation("org.graceframework:grace-test-support:$graceVersion")
     // testCompile "org.grails:grails-plugin-testing"
-    console "org.grails:grails-console"
+    // console "org.grails:grails-console"
 }
 
 bootRun {

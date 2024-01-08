@@ -17,7 +17,7 @@ apply plugin: 'maven-publish'
 apply plugin: 'java-library'
 apply plugin: 'idea'
 
-group = 'com.bertramlabs.plugins'
+group = 'org.graceframework.plugins'
 sourceCompatibility = '1.11'
 targetCompatibility = '1.11'
 
@@ -52,11 +52,11 @@ publishing {
 					resolveStrategy = Closure.DELEGATE_FIRST
 					name 'asset-pipeline-gradle'
 					description 'JVM Asset Pipeline Gradle Adapter.'
-					url 'https://github.com/bertramdev/asset-pipeline-core'
+					url 'https://github.com/grace-plugins/asset-pipeline'
 					scm {
-						url 'https://github.com/bertramdev/asset-pipeline-core'
-						connection 'scm:https://bertramdev@github.com/bertramdev/asset-pipeline-core.git'
-						developerConnection 'scm:git://github.com/bertramdev/asset-pipeline-core.git'
+						url 'https://github.com/grace-plugins/asset-pipeline'
+						connection 'scm:https://bertramdev@github.com/grace-plugins/asset-pipeline.git'
+						developerConnection 'scm:git://github.com/grace-plugins/asset-pipeline.git'
 					}
 					licenses {
 						license {
@@ -70,6 +70,11 @@ publishing {
 							id 'davydotcom'
 							name 'David Estes'
 							email 'davydotcom@gmail.com'
+						}
+						developer {
+							id 'rainboyan'
+							name 'Michael Yan'
+							email 'rain@rainboyan.com'
 						}
 					}
 				}
@@ -111,19 +116,19 @@ test {
 // The configuration example below shows the minimum required properties
 // configured to publish your plugin to the plugin portal
 pluginBundle {
-	website = 'https://github.com/bertramdev/asset-pipeline-core/'
-	vcsUrl = 'https://github.com/bertramdev/asset-pipeline-core/'
-	description = 'JVM Asset Pipeline Gradle Adapter.'
+	website = 'https://github.com/grace-plugins/asset-pipeline/'
+	vcsUrl = 'https://github.com/grace-plugins/asset-pipeline/'
+	description = 'Grace Asset Pipeline Gradle Adapter.'
 	tags = ['assets', 'resources', 'asset-pipeline']
 
 	plugins {
 		assetPipelinePlugin {
-			id = 'com.bertramlabs.asset-pipeline'
+			id = 'org.graceframework.asset-pipeline'
 			displayName = 'Asset-Pipeline Plugin'
 		}
 	}
 	mavenCoordinates {
-		groupId = 'com.bertramlabs.plugins'
+		groupId = 'org.graceframework.plugins'
 	}
 }
 
