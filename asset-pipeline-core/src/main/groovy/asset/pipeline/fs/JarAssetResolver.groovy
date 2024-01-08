@@ -89,7 +89,7 @@ class JarAssetResolver extends AbstractAssetResolver<ZipEntry> {
 
     @CompileStatic
 	public List<AssetFile> getAssets(String basePath, String contentType = null, String extension = null,  Boolean recursive = true, AssetFile relativeFile=null, AssetFile baseFile = null) {
-		def fileList = []
+		List<AssetFile> fileList = []
 
 		if(!basePath.startsWith('/') && relativeFile != null) {
 			List<String> pathArgs = relativeFile.parentPath ? relativeFile.parentPath.split(DIRECTIVE_FILE_SEPARATOR).toList() as List<String> : [] as List<String> //(path should be relative not canonical)

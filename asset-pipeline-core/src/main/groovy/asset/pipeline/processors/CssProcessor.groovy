@@ -45,9 +45,9 @@ class CssProcessor extends AbstractUrlRewritingProcessor {
         final Map<String, String> cachedPaths = [:]
         return \
             inputText.replaceAll(URL_CALL_PATTERN) { final String urlCall, final String quote, final String assetPath ->
-                final String cachedPath = cachedPaths[assetPath]
+                String cachedPath = cachedPaths[assetPath]
 
-                final String replacementPath
+                String replacementPath = null
                 if (cachedPath != null) {
                     replacementPath = cachedPath
                 } else if (assetPath.size() > 0 && isRelative(assetPath)) {

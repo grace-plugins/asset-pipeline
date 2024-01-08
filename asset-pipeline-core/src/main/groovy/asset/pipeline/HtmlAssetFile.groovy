@@ -28,7 +28,7 @@ import groovy.transform.CompileStatic
  */
 @CompileStatic
 class HtmlAssetFile extends AbstractAssetFile {
-	static List<Class<Processor>> processors = [HtmlProcessor]
+	static List<Class<Processor>> processors = [HtmlProcessor as Class<Processor>]
     static final List<String> contentType = ['text/html']
     static List<String> extensions = ['html']
     static String compiledExtension = 'html'

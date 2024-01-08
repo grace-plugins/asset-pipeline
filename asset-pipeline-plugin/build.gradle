@@ -8,7 +8,7 @@ buildscript {
         maven { url "https://repo.grails.org/grails/core" }
     }
     dependencies {
-        classpath "org.grails:grails-gradle-plugin:$grailsVersion"
+        classpath "org.grails:grails-gradle-plugin:$grailsGradlePluginVersion"
     }
 }
 
@@ -20,7 +20,7 @@ group "org.graceframework.plugins"
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: "org.grails.grails-plugin"
-apply plugin: 'com.jfrog.bintray'
+// apply plugin: 'com.jfrog.bintray'
 apply plugin: "org.grails.grails-gsp"
 apply plugin: "org.grails.grails-doc"
 
@@ -121,7 +121,9 @@ dependencies {
     compileOnly "org.springframework.boot:spring-boot-starter-tomcat"
 
     compileOnly "org.graceframework:grace-boot:$graceVersion"
-    compileOnly 'javax.servlet:javax.servlet-api:3.1.0'
+    implementation "commons-lang:commons-lang:2.6"
+    implementation "com.github.ben-manes.caffeine:caffeine:2.9.3"
+    compileOnly 'javax.servlet:javax.servlet-api:4.0.1'
     implementation project(':asset-pipeline-core'), {
         exclude group:'org.mozilla', module:'rhino'
         exclude group:'com.google.javascript', module:'closure-compiler-unshaded'
