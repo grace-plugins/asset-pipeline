@@ -1,7 +1,6 @@
 buildscript {
 	repositories {
-		mavenLocal()
-		jcenter()
+		mavenCentral()
 	}
 	dependencies {
 	}
@@ -22,7 +21,6 @@ ext.isReleaseVersion = !version.endsWith('SNAPSHOT')
 
 
 repositories {
-	jcenter()
 	mavenCentral()
 }
 
