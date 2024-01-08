@@ -12,6 +12,7 @@ apply plugin: 'java-library'
 apply plugin: 'groovy'
 apply plugin: 'maven-publish'
 apply plugin: 'idea'
+apply plugin: 'signing'
 
 group = 'org.graceframework.plugins'
 sourceCompatibility = '1.11'
@@ -127,3 +128,10 @@ test {
 	}
 }
 
+
+afterEvaluate {
+	signing {
+		required { isReleaseVersion && gradle.taskGraph.hasTask("publish") }
+		sign publishing.publications.maven
+	}
+}

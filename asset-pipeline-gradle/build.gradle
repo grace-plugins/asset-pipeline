@@ -14,6 +14,7 @@ buildscript {
 apply plugin: 'com.gradle.plugin-publish'
 apply plugin: 'groovy'
 apply plugin: 'maven-publish'
+apply plugin: 'signing'
 // apply plugin: 'java-library'
 apply plugin: 'java-gradle-plugin'
 apply plugin: 'idea'
@@ -23,6 +24,39 @@ sourceCompatibility = '1.11'
 targetCompatibility = '1.11'
 
 ext.isReleaseVersion = !version.endsWith('SNAPSHOT')
+ext.pomInfo = {
+	delegate.name 'asset-pipeline-gradle'
+	delegate.description 'JVM Asset Pipeline Gradle Adapter.'
+	delegate.url 'https://github.com/grace-plugins/asset-pipeline'
+
+	delegate.licenses {
+		delegate.license {
+			delegate.name 'The Apache Software License, Version 2.0'
+			delegate.url 'https://www.apache.org/licenses/LICENSE-2.0.txt'
+			delegate.distribution 'repo'
+		}
+	}
+
+	delegate.scm {
+		delegate.url 'scm:git@github.com:grace-plugins/asset-pipeline.git'
+		delegate.connection 'scm:git@github.com:grace-plugins/asset-pipeline.git'
+		delegate.developerConnection 'scm:git@github.com:grace-plugins/asset-pipeline.git'
+	}
+
+	delegate.developers {
+		delegate.developer {
+			delegate.id 'davydotcom'
+			delegate.name 'David Estes'
+			delegate.email 'davydotcom@gmail.com'
+		}
+		delegate.developer {
+			delegate.id 'rainboyan'
+			delegate.name 'Michael Yan'
+			delegate.email 'rain@rainboyan.com'
+		}
+	}
+}
+
 
 repositories {
 	// jcenter()
@@ -112,6 +146,7 @@ pluginBundle {
 		assetPipelinePlugin {
 			id = 'org.graceframework.asset-pipeline'
 			displayName = 'Asset-Pipeline Plugin'
+			description = 'Grace Asset Pipeline Gradle Adapter.'
 		}
 	}
 	mavenCoordinates {
@@ -124,5 +159,14 @@ afterEvaluate {
 	signing {
 		required { isReleaseVersion && gradle.taskGraph.hasTask("publish") }
 		sign(publishing.publications.maven)
+	}
+
+	publishing.publications.each { MavenPublication publication ->
+		if (publication.name != "maven") {
+			publication.pom.withXml {
+				def xml = asNode()
+				xml.children().last() + pomInfo
+			}
+		}
 	}
 }
