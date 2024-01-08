@@ -17,6 +17,7 @@
 package asset.pipeline.gradle
 
 import asset.pipeline.AssetPipelineConfigHolder
+import org.gradle.api.GradleException
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.UnknownDomainObjectException
@@ -49,9 +50,10 @@ class AssetPipelinePlugin implements Plugin<Project> {
         def defaultConfiguration = project.extensions.create('assets', AssetPipelineExtensionImpl)
         def config = AssetPipelineConfigHolder.config != null ? AssetPipelineConfigHolder.config : [:]
         config.cacheLocation = "${project.buildDir}/.assetcache"
+        def grailsAppDir = resolveGrailsAppDir(project)
         if (project.extensions.findByName('grails')) {
             
-            defaultConfiguration.assetsPath = 'grails-app/assets'
+            defaultConfiguration.assetsPath = "${grailsAppDir}/assets"
         } else {
             defaultConfiguration.assetsPath = "${project.projectDir}/src/assets"
         }
@@ -193,6 +195,15 @@ class AssetPipelinePlugin implements Plugin<Project> {
             }
             
         }
+    }
+
+    static String resolveGrailsAppDir(Project project) {
+        List<String> grailsAppDirs = ['grails-app', 'app']
+        String grailsAppDir = grailsAppDirs.find { String dir -> project.file(dir).exists() }
+        if (!grailsAppDir) {
+            throw new GradleException("Grails requires an application directory : 'grails-app' or 'app'.")
+        }
+        return grailsAppDir
     }
 
 }

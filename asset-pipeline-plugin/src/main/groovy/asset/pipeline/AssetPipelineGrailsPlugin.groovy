@@ -51,6 +51,7 @@ class AssetPipelineGrailsPlugin extends grails.plugins.Plugin {
         //Register Plugin Paths
         def ctx = applicationContext
         AssetPipelineConfigHolder.registerResolver(new FileSystemAssetResolver('application',"${BuildSettings.BASE_DIR}/grails-app/assets"))
+        AssetPipelineConfigHolder.registerResolver(new FileSystemAssetResolver('applicationNew',"${BuildSettings.BASE_DIR}/app/assets"))
 
         try {
             ctx.pluginManager.getAllPlugins()?.each { plugin ->
@@ -58,7 +59,10 @@ class AssetPipelineGrailsPlugin extends grails.plugins.Plugin {
                     def projectDirectory = plugin.getProjectDirectory()
                     if(projectDirectory) {
                         String assetPath = new File(plugin.getProjectDirectory(),"grails-app/assets").canonicalPath
+                        String assetPathNew = new File(plugin.getProjectDirectory(),"app/assets").canonicalPath
+
                         AssetPipelineConfigHolder.registerResolver(new FileSystemAssetResolver(plugin.name,assetPath))
+                        AssetPipelineConfigHolder.registerResolver(new FileSystemAssetResolver(plugin.name + 'Assets',assetPathNew))
                     }
                 }
             }
