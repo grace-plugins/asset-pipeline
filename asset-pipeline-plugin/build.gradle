@@ -16,16 +16,17 @@ buildscript {
 
 group "org.graceframework.plugins"
 
-// apply plugin: 'maven-publish'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: "org.grails.grails-plugin"
-// apply plugin: 'com.jfrog.bintray'
 apply plugin: "org.grails.grails-gsp"
 apply plugin: "org.grails.grails-doc"
+// apply plugin: 'maven-publish'
+apply plugin: 'signing'
 
 // Used for publishing to central repository, remove if not needed
 ext {
+    isReleaseVersion = !version.endsWith('SNAPSHOT')
     grailsVersion = project.grailsVersion
     websiteUrl = "http://www.asset-pipeline.com"
     vcsUrl = "https://github.com/bertramdev/grails-asset-pipeline/tree/grails3"
@@ -128,4 +129,11 @@ jar {
     enabled = true
     archiveClassifier.set('')
     includeEmptyDirs = false
+}
+
+afterEvaluate {
+	signing {
+		required { isReleaseVersion && gradle.taskGraph.hasTask("publish") }
+		sign publishing.publications.maven
+	}
 }

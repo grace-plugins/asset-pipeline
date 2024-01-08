@@ -14,7 +14,8 @@ buildscript {
 apply plugin: 'com.gradle.plugin-publish'
 apply plugin: 'groovy'
 apply plugin: 'maven-publish'
-apply plugin: 'java-library'
+// apply plugin: 'java-library'
+apply plugin: 'java-gradle-plugin'
 apply plugin: 'idea'
 
 group = 'org.graceframework.plugins'
@@ -118,3 +119,10 @@ pluginBundle {
 	}
 }
 
+
+afterEvaluate {
+	signing {
+		required { isReleaseVersion && gradle.taskGraph.hasTask("publish") }
+		sign(publishing.publications.maven)
+	}
+}

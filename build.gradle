@@ -40,23 +40,7 @@ java {
 }
 
 subprojects { project ->
-	if (project.name != 'asset-pipeline-classpath-test' && project.name != 'asset-pipeline-docs' && project.name != 'asset-pipeline-site') {
-
-	    // afterEvaluate {
-	    //     signing {
-	    //         required { isReleaseVersion && gradle.taskGraph.hasTask("publish") }
-	    //         sign publishing.publications.maven
-	    //     }
-	    // }
-
-	    tasks.withType(Sign) {
-	        onlyIf { isReleaseVersion }
-	    }
-
-	    //do not generate extra load on Nexus with new staging repository if signing fails
-	    tasks.withType(io.github.gradlenexus.publishplugin.InitializeNexusStagingRepository).configureEach {
-	        shouldRunAfter(tasks.withType(Sign))
-	    }
+	if (project.name != 'asset-pipeline-classpath-test' && project.name != 'asset-pipeline-docs' && project.name != 'asset-pipeline-site' && project.name != 'asset-pipeline-gradle') {
     
     }
 }
