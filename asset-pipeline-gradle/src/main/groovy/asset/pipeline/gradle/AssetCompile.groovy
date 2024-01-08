@@ -45,7 +45,7 @@ import org.gradle.api.tasks.CacheableTask
 @CacheableTask   
 class AssetCompile extends DefaultTask {
 
-    @Delegate(methodAnnotations = true) private AssetPipelineExtension pipelineExtension = new AssetPipelineExtensionImpl()
+    @Delegate(methodAnnotations = false) private AssetPipelineExtension pipelineExtension = new AssetPipelineExtensionImpl()
     //private FileCollection classpath;
 
     @Input
