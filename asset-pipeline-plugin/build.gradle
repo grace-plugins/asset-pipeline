@@ -1,14 +1,12 @@
 buildscript {
-    ext {
-        grailsVersion = project.grailsVersion
-    }
     repositories {
         // mavenLocal()
         mavenCentral()
         maven { url "https://repo.grails.org/grails/core" }
+        maven { url 'https://repo.gradle.org/gradle/libs-releases' }
     }
     dependencies {
-        classpath "org.grails:grails-gradle-plugin:$grailsGradlePluginVersion"
+        classpath "org.graceframework:grace-gradle-plugin:$graceVersion"
     }
 }
 
@@ -18,16 +16,15 @@ group "org.graceframework.plugins"
 
 apply plugin: 'eclipse'
 apply plugin: 'idea'
-apply plugin: "org.grails.grails-plugin"
-apply plugin: "org.grails.grails-gsp"
-apply plugin: "org.grails.grails-doc"
+apply plugin: "org.graceframework.grace-plugin"
+apply plugin: "org.graceframework.grace-gsp"
+apply plugin: "org.graceframework.grace-doc"
 // apply plugin: 'maven-publish'
 apply plugin: 'signing'
 
 // Used for publishing to central repository, remove if not needed
 ext {
     isReleaseVersion = !version.endsWith('SNAPSHOT')
-    grailsVersion = project.grailsVersion
     websiteUrl = "http://www.asset-pipeline.com"
     vcsUrl = "https://github.com/bertramdev/grails-asset-pipeline/tree/grails3"
     issueTrackerUrl = "https://github.com/bertramdev/grails-asset-pipeline/issues"
@@ -50,7 +47,7 @@ repositories {
 
 dependencyManagement {
     imports {
-        mavenBom "org.grails:grails-bom:$grailsVersion"
+        mavenBom "org.graceframework:grace-bom:$graceVersion"
     }
     applyMavenExclusions false
 }
@@ -108,6 +105,8 @@ dependencies {
     compileOnly "org.springframework.boot:spring-boot-starter-tomcat"
 
     compileOnly "org.graceframework:grace-boot:$graceVersion"
+    implementation "org.graceframework:grace-web-common:$graceVersion"
+    implementation "org.graceframework:grace-web-url-mappings:$graceVersion"
     implementation "commons-lang:commons-lang:2.6"
     implementation "com.github.ben-manes.caffeine:caffeine:2.9.3"
     compileOnly 'javax.servlet:javax.servlet-api:4.0.1'
