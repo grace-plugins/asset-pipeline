@@ -104,9 +104,10 @@ dependencies {
     compileOnly "org.springframework.boot:spring-boot-autoconfigure"
     compileOnly "org.springframework.boot:spring-boot-starter-tomcat"
 
-    compileOnly "org.graceframework:grace-boot:$graceVersion"
-    implementation "org.graceframework:grace-web-common:$graceVersion"
-    implementation "org.graceframework:grace-web-url-mappings:$graceVersion"
+    compileOnly "org.graceframework:grace-boot"
+    implementation "org.graceframework:grace-web-common"
+    implementation "org.graceframework:grace-web-taglib"
+    implementation "org.graceframework:grace-web-url-mappings"
     implementation "commons-lang:commons-lang:2.6"
     implementation "com.github.ben-manes.caffeine:caffeine:2.9.3"
     compileOnly 'javax.servlet:javax.servlet-api:4.0.1'
@@ -114,7 +115,7 @@ dependencies {
         exclude group:'org.mozilla', module:'rhino'
         exclude group:'com.google.javascript', module:'closure-compiler-unshaded'
     }
-    testImplementation("org.graceframework:grace-test-support:$graceVersion")
+    testImplementation("org.graceframework:grace-test-support")
     // testCompile "org.grails:grails-plugin-testing"
     // console "org.grails:grails-console"
 }
