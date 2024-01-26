@@ -25,9 +25,8 @@ apply plugin: 'signing'
 // Used for publishing to central repository, remove if not needed
 ext {
     isReleaseVersion = !version.endsWith('SNAPSHOT')
-    websiteUrl = "http://www.asset-pipeline.com"
-    vcsUrl = "https://github.com/bertramdev/grails-asset-pipeline/tree/grails3"
-    issueTrackerUrl = "https://github.com/bertramdev/grails-asset-pipeline/issues"
+    websiteUrl = "https://grace-plugins/github.io/asset-pipeline"
+    issueTrackerUrl = "https://github.com/grace-plugins/asset-pipeline/issues"
 }
 
 sourceCompatibility = 1.11
@@ -68,8 +67,8 @@ publishing {
                     url 'https://github.com/grace-plugins/asset-pipeline'
                     scm {
                         url 'https://github.com/grace-plugins/asset-pipeline'
-                        connection 'scm:https://bertramdev@github.com/grace-plugins/asset-pipeline.git'
-                        developerConnection 'scm:git://github.com/grace-plugins/asset-pipeline.git'
+                        connection 'scm:https://github.com/grace-plugins/asset-pipeline.git'
+                        developerConnection 'scm:git@github.com/grace-plugins/asset-pipeline.git'
                     }
                     licenses {
                         license {
@@ -79,11 +78,6 @@ publishing {
                         }
                     }
                     developers {
-                        developer {
-                            id 'davydotcom'
-                            name 'David Estes'
-                            email 'davydotcom@gmail.com'
-                        }
 						developer {
 							id 'rainboyan'
 							name 'Michael Yan'
