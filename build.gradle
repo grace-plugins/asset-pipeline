@@ -46,8 +46,8 @@ subprojects { project ->
 }
 
 dependencies {
-	api 'org.codehaus.groovy:groovy:3.0.11'
-	api 'org.codehaus.groovy:groovy-templates:3.0.11'
+	api "org.codehaus.groovy:groovy:$groovyVersion"
+	api "org.codehaus.groovy:groovy-templates:$groovyVersion"
 	api 'org.mozilla:rhino:1.7R4'
 	testImplementation 'org.spockframework:spock-core:2.3-groovy-3.0'
 }

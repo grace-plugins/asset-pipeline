@@ -54,10 +54,10 @@ groovydoc {
 }
 
 dependencies {
-    compileOnly    'org.codehaus.groovy:groovy:3.0.11'
-    compileOnly    'org.codehaus.groovy:groovy-json:3.0.11'
-    compileOnly    'org.codehaus.groovy:groovy-templates:3.0.11'
-    doc         'org.codehaus.groovy:groovy-all:3.0.11'
+    compileOnly    "org.codehaus.groovy:groovy:$groovyVersion"
+    compileOnly    "org.codehaus.groovy:groovy-json:$groovyVersion"
+    compileOnly    "org.codehaus.groovy:groovy-templates:$groovyVersion"
+    doc         "org.codehaus.groovy:groovy-all:$groovyVersion"
     doc         'org.fusesource.jansi:jansi:1.18'
     api     'org.mozilla:rhino:1.7R4'
     api("org.graalvm.sdk:graal-sdk:22.0.0.2")
@@ -68,7 +68,7 @@ dependencies {
     api 'org.slf4j:slf4j-api:1.7.28'
     //api   'log4j:log4j:1.2.16'
     testImplementation project(':asset-pipeline-classpath-test')
-    testImplementation 'org.codehaus.groovy:groovy-all:3.0.11'
+    testImplementation "org.codehaus.groovy:groovy-all:$groovyVersion"
     testImplementation 'org.spockframework:spock-core:2.3-groovy-3.0'
     testRuntimeOnly 'org.slf4j:slf4j-simple:1.7.28'
 }
