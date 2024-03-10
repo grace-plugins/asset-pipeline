@@ -2,7 +2,6 @@ buildscript {
     repositories {
         // mavenLocal()
         mavenCentral()
-        maven { url "https://repo.grails.org/grails/core" }
         maven { url 'https://repo.gradle.org/gradle/libs-releases' }
     }
     dependencies {
@@ -25,8 +24,6 @@ apply plugin: 'signing'
 // Used for publishing to central repository, remove if not needed
 ext {
     isReleaseVersion = !version.endsWith('SNAPSHOT')
-    websiteUrl = "https://grace-plugins/github.io/asset-pipeline"
-    issueTrackerUrl = "https://github.com/grace-plugins/asset-pipeline/issues"
 }
 
 sourceCompatibility = 1.11
@@ -41,18 +38,37 @@ java {
 repositories {
     // mavenLocal()
     mavenCentral()
-    maven { url "https://repo.grails.org/grails/core" }
 }
 
-dependencyManagement {
-    imports {
-        mavenBom "org.graceframework:grace-bom:$graceVersion"
+dependencies {
+    compileOnly 'org.springframework.boot:spring-boot-starter-logging'
+    compileOnly "org.springframework.boot:spring-boot-starter-actuator"
+    compileOnly "org.springframework.boot:spring-boot-autoconfigure"
+    compileOnly "org.springframework.boot:spring-boot-starter-tomcat"
+
+    compileOnly "org.graceframework:grace-boot"
+    implementation "org.graceframework:grace-web-common"
+    implementation "org.graceframework:grace-web-taglib"
+    implementation "org.graceframework:grace-web-url-mappings"
+    implementation "commons-lang:commons-lang:2.6"
+    implementation "com.github.ben-manes.caffeine:caffeine:2.9.3"
+    compileOnly 'javax.servlet:javax.servlet-api:4.0.1'
+    implementation project(':asset-pipeline-core'), {
+        exclude group:'org.mozilla', module:'rhino'
+        exclude group:'com.google.javascript', module:'closure-compiler-unshaded'
     }
-    applyMavenExclusions false
+    testImplementation("org.graceframework:grace-test-support")
 }
 
-grails {
-    packageAssets = false
+bootRun {
+    jvmArgs('-Dspring.output.ansi.enabled=always')
+}
+
+
+jar {
+    enabled = true
+    archiveClassifier.set('')
+    includeEmptyDirs = false
 }
 
 publishing {
@@ -62,7 +78,7 @@ publishing {
             pom.withXml {
                 asNode().children().last() + {
                     resolveStrategy = Closure.DELEGATE_FIRST
-                    name 'asset-pipeline-grails'
+                    name 'Asset Pipeline Plugin'
                     description 'The Grace Asset-Pipeling plugin providing asset transpiling to grace.'
                     url 'https://github.com/grace-plugins/asset-pipeline'
                     scm {
@@ -89,40 +105,6 @@ publishing {
             from components.java
         }
     }
-}
-
-
-dependencies {
-    compileOnly 'org.springframework.boot:spring-boot-starter-logging'
-    compileOnly "org.springframework.boot:spring-boot-starter-actuator"
-    compileOnly "org.springframework.boot:spring-boot-autoconfigure"
-    compileOnly "org.springframework.boot:spring-boot-starter-tomcat"
-
-    compileOnly "org.graceframework:grace-boot"
-    implementation "org.graceframework:grace-web-common"
-    implementation "org.graceframework:grace-web-taglib"
-    implementation "org.graceframework:grace-web-url-mappings"
-    implementation "commons-lang:commons-lang:2.6"
-    implementation "com.github.ben-manes.caffeine:caffeine:2.9.3"
-    compileOnly 'javax.servlet:javax.servlet-api:4.0.1'
-    implementation project(':asset-pipeline-core'), {
-        exclude group:'org.mozilla', module:'rhino'
-        exclude group:'com.google.javascript', module:'closure-compiler-unshaded'
-    }
-    testImplementation("org.graceframework:grace-test-support")
-    // testCompile "org.grails:grails-plugin-testing"
-    // console "org.grails:grails-console"
-}
-
-bootRun {
-    jvmArgs('-Dspring.output.ansi.enabled=always')
-}
-
-
-jar {
-    enabled = true
-    archiveClassifier.set('')
-    includeEmptyDirs = false
 }
 
 afterEvaluate {
