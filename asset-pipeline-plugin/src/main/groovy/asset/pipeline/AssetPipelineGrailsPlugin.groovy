@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 the original author or authors.
+ * Copyright 2014-2024 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,21 +30,21 @@ import org.springframework.util.ClassUtils
 
 @Commons
 class AssetPipelineGrailsPlugin extends grails.plugins.Plugin {
-    def grailsVersion   = "3.0 > *"
+    def grailsVersion   = "2022.0.0 > *"
     def title           = "Asset Pipeline Plugin"
     def author          = "David Estes"
     def authorEmail     = "destes@bcap.com"
-    def description     = 'The Asset-Pipeline is a plugin used for managing and processing static assets in Grails applications. Asset-Pipeline functions include processing and minification of both CSS and JavaScript files. It is also capable of being extended to compile custom static assets, such as CoffeeScript.'
-    def documentation   = "http://www.asset-pipeline.com"
+    def description     = 'The Asset-Pipeline is a plugin used for managing and processing static assets in Grace applications. Asset-Pipeline functions include processing and minification of both CSS and JavaScript files.'
+    def documentation   = "https://github.com/grace-plugins/grace-asset-pipeline"
     def license         = "APACHE"
-    def organization    = [ name: "Bertram Capital", url: "http://www.bertramcapital.com/" ]
-    def issueManagement = [ system: "GITHUB", url: "http://github.com/bertramdev/grails-asset-pipeline/issues" ]
-    def scm             = [ url: "http://github.com/bertramdev/grails-asset-pipeline" ]
+    def organization    = [ name: "Grace Plugins", url: "https://github.com/grace-plugins" ]
+    def issueManagement = [ system: "GITHUB", url: "https://github.com/grace-plugins/grace-asset-pipeline/issues" ]
+    def scm             = [ url: "https://github.com/grace-plugins/grace-asset-pipeline" ]
     def pluginExcludes  = [
         "grails-app/assets/**",
         "test/dummy/**"
     ]
-    def developers      = [ [name: 'Brian Wheeler'] ]
+    def developers      = [ [id: 'rainboyan'], [name: 'Michael Yan'], [email: 'rain@rainboyan.com'] ]
     def loadAfter = ['url-mappings']
 
     void doWithApplicationContext() {
