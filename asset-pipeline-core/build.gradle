@@ -15,8 +15,6 @@ apply plugin: 'idea'
 apply plugin: 'signing'
 
 group = 'org.graceframework.plugins'
-sourceCompatibility = '1.11'
-targetCompatibility = '1.11'
 
 ext.isReleaseVersion = !version.endsWith('SNAPSHOT')
 
@@ -39,6 +37,9 @@ sourceSets {
 }
 
 java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(11)
+    }
     withSourcesJar()
     withJavadocJar()
 }
@@ -66,7 +67,6 @@ dependencies {
 
     compileOnly     'com.google.javascript:closure-compiler-unshaded:v20210106'
     api 'org.slf4j:slf4j-api:1.7.28'
-    //api   'log4j:log4j:1.2.16'
     testImplementation project(':asset-pipeline-classpath-test')
     testImplementation "org.codehaus.groovy:groovy-all:$groovyVersion"
     testImplementation 'org.spockframework:spock-core:2.3-groovy-3.0'
@@ -80,7 +80,7 @@ publishing {
             pom.withXml {
                 asNode().children().last() + {
                     resolveStrategy = Closure.DELEGATE_FIRST
-                    name 'asset-pipeline-core'
+                    name 'Asset Pipeline Core'
                     description 'JVM Asset Pipeline library for serving static web assets, bundling, minifying, and extensibility for transpiling.'
                     url 'https://github.com/grace-plugins/asset-pipeline'
                     scm {

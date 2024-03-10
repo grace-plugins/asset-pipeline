@@ -2,6 +2,7 @@ buildscript {
     repositories {
         // mavenLocal()
         mavenCentral()
+        gradlePluginPortal()
         maven { url 'https://repo.gradle.org/gradle/libs-releases' }
     }
     dependencies {
@@ -21,16 +22,14 @@ apply plugin: "org.graceframework.grace-doc"
 // apply plugin: 'maven-publish'
 apply plugin: 'signing'
 
-// Used for publishing to central repository, remove if not needed
 ext {
     isReleaseVersion = !version.endsWith('SNAPSHOT')
 }
 
-sourceCompatibility = 1.11
-targetCompatibility = 1.11
-
-
 java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(11)
+    }
     withSourcesJar()
     withJavadocJar()
 }
