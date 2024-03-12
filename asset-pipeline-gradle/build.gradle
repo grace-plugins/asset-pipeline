@@ -20,8 +20,6 @@ apply plugin: 'java-gradle-plugin'
 apply plugin: 'idea'
 
 group = 'org.graceframework.plugins'
-sourceCompatibility = '1.11'
-targetCompatibility = '1.11'
 
 ext.isReleaseVersion = !version.endsWith('SNAPSHOT')
 ext.pomInfo = {
@@ -60,6 +58,9 @@ repositories {
 }
 
 java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
     withSourcesJar()
     withJavadocJar()
 }
