@@ -104,7 +104,7 @@ class JarAssetResolver extends AbstractAssetResolver<ZipEntry> {
 
 		baseJar.entries().each { JarEntry entry ->
 			if(entry.name.startsWith(basePath)) {
-				String[] mimeType = AssetHelper.assetMimeTypeForURI(entry.name)
+				List<String> mimeType = AssetHelper.assetMimeTypeForURI(entry.name)
 				if(!entry.isDirectory() && mimeType && contentType in mimeType) {
 					fileList << assetForFile(entry,contentType, baseFile, prefixPath)
 				}

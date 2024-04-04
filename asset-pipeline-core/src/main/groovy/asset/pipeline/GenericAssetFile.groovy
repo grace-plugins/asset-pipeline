@@ -63,7 +63,11 @@ class GenericAssetFile extends AbstractAssetFile {
      * @return
      */
 	public Byte[] getBytes() {
-		return inputStream.bytes
+		Byte[] newByteArray = new Byte[inputStream.bytes.length]
+		for (int i = 0; i < inputStream.bytes.length; i++) {
+			newByteArray[i] = inputStream.bytes[i]
+		}
+		return newByteArray
 	}
 
     /**
