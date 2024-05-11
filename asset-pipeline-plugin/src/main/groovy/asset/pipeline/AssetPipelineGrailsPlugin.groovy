@@ -41,7 +41,7 @@ class AssetPipelineGrailsPlugin extends grails.plugins.Plugin {
     def issueManagement = [ system: "GITHUB", url: "https://github.com/grace-plugins/grace-asset-pipeline/issues" ]
     def scm             = [ url: "https://github.com/grace-plugins/grace-asset-pipeline" ]
     def pluginExcludes  = [
-        "grails-app/assets/**",
+        "app/assets/**",
         "test/dummy/**"
     ]
     def developers      = [ [id: 'rainboyan'], [name: 'Michael Yan'], [email: 'rain@rainboyan.com'] ]
@@ -50,19 +50,16 @@ class AssetPipelineGrailsPlugin extends grails.plugins.Plugin {
     void doWithApplicationContext() {
         //Register Plugin Paths
         def ctx = applicationContext
-        AssetPipelineConfigHolder.registerResolver(new FileSystemAssetResolver('application',"${BuildSettings.BASE_DIR}/grails-app/assets"))
-        AssetPipelineConfigHolder.registerResolver(new FileSystemAssetResolver('applicationNew',"${BuildSettings.BASE_DIR}/app/assets"))
+        AssetPipelineConfigHolder.registerResolver(new FileSystemAssetResolver('application', "${BuildSettings.BASE_DIR}/app/assets"))
 
         try {
             ctx.pluginManager.getAllPlugins()?.each { plugin ->
                 if(plugin instanceof BinaryGrailsPlugin) {
                     def projectDirectory = plugin.getProjectDirectory()
                     if(projectDirectory) {
-                        String assetPath = new File(plugin.getProjectDirectory(),"grails-app/assets").canonicalPath
-                        String assetPathNew = new File(plugin.getProjectDirectory(),"app/assets").canonicalPath
+                        String assetPath = new File(plugin.getProjectDirectory(), "app/assets").canonicalPath
 
                         AssetPipelineConfigHolder.registerResolver(new FileSystemAssetResolver(plugin.name,assetPath))
-                        AssetPipelineConfigHolder.registerResolver(new FileSystemAssetResolver(plugin.name + 'Assets',assetPathNew))
                     }
                 }
             }

@@ -30,7 +30,7 @@ class AssetProcessorServiceSpec extends Specification implements ServiceUnitTest
 
 
 	def setup() {
-		AssetPipelineConfigHolder.registerResolver(new FileSystemAssetResolver('application','grails-app/assets'))
+		AssetPipelineConfigHolder.registerResolver(new FileSystemAssetResolver('application', 'app/assets'))
 		service.grailsLinkGenerator = [serverBaseURL: MOCK_BASE_SERVER_URL]
 	}
 
