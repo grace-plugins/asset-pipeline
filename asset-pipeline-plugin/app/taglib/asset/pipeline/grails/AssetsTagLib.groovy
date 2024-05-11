@@ -26,11 +26,12 @@ class AssetsTagLib {
 	def javascript = {final attrs ->
 		final GrailsPrintWriter outPw = out
 		attrs.remove('href')
+		String type = attrs.type ?: 'text/javascript'
 		element(attrs, 'js', 'application/javascript', null) {final String src, final String queryString, final outputAttrs, final String endOfLine, final boolean useManifest ->
 			if(attrs.containsKey('asset-defer')) {
-				script(outputAttrs + [type: "text/javascript", src: assetPath(src: src, useManifest: useManifest) + queryString],'')
+				script(outputAttrs + [type: type, src: assetPath(src: src, useManifest: useManifest) + queryString],'')
 			} else {
-				outPw << '<script type="text/javascript" src="' << assetPath(src: src, useManifest: useManifest) << queryString << '" ' << paramsToHtmlAttr(outputAttrs) << '></script>' << endOfLine
+				outPw << "<script type=\"${type}\" src=\"" << assetPath(src: src, useManifest: useManifest) << queryString << '" ' << paramsToHtmlAttr(outputAttrs) << '></script>' << endOfLine
 			}
 
 		}
