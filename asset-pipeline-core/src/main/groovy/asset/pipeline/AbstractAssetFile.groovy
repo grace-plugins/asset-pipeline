@@ -121,7 +121,7 @@ abstract class AbstractAssetFile implements AssetFile {
 	public String getParentPath() {
 		String[] pathArgs = path.split("/")
 		if(pathArgs.size() == 1) {
-			return null
+			return ""
 		}
 		return (Arrays.copyOfRange(pathArgs,0,pathArgs.size() - 1) as String[]).join("/")
 	}
