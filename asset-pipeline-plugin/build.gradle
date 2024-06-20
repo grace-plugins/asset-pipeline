@@ -79,11 +79,11 @@ publishing {
                     resolveStrategy = Closure.DELEGATE_FIRST
                     name 'Asset Pipeline Plugin'
                     description 'The Grace Asset-Pipeling plugin providing asset transpiling to grace.'
-                    url 'https://github.com/grace-plugins/asset-pipeline'
+                    url 'https://github.com/grace-plugins/grace-asset-pipeline'
                     scm {
-                        url 'https://github.com/grace-plugins/asset-pipeline'
-                        connection 'scm:https://github.com/grace-plugins/asset-pipeline.git'
-                        developerConnection 'scm:git@github.com/grace-plugins/asset-pipeline.git'
+                        url 'https://github.com/grace-plugins/grace-asset-pipeline'
+                        connection 'scm:https://github.com/grace-plugins/grace-asset-pipeline.git'
+                        developerConnection 'scm:git@github.com/grace-plugins/grace-asset-pipeline.git'
                     }
                     licenses {
                         license {

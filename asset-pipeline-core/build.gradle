@@ -82,11 +82,11 @@ publishing {
                     resolveStrategy = Closure.DELEGATE_FIRST
                     name 'Asset Pipeline Core'
                     description 'JVM Asset Pipeline library for serving static web assets, bundling, minifying, and extensibility for transpiling.'
-                    url 'https://github.com/grace-plugins/asset-pipeline'
+                    url 'https://github.com/grace-plugins/grace-asset-pipeline'
                     scm {
-                        url 'https://github.com/grace-plugins/asset-pipeline'
-                        connection 'scm:https://github.com/grace-plugins/asset-pipeline.git'
-                        developerConnection 'scm:git@github.com/grace-plugins/asset-pipeline.git'
+                        url 'https://github.com/grace-plugins/grace-asset-pipeline'
+                        connection 'scm:https://github.com/grace-plugins/grace-asset-pipeline.git'
+                        developerConnection 'scm:git@github.com/grace-plugins/grace-asset-pipeline.git'
                     }
                     licenses {
                         license {

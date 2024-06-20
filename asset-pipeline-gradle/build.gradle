@@ -103,8 +103,8 @@ test {
 // The configuration example below shows the minimum required properties
 // configured to publish your plugin to the plugin portal
 pluginBundle {
-    website = 'https://github.com/grace-plugins/asset-pipeline/'
-    vcsUrl = 'https://github.com/grace-plugins/asset-pipeline/'
+    website = 'https://github.com/grace-plugins/grace-asset-pipeline/'
+    vcsUrl = 'https://github.com/grace-plugins/grace-asset-pipeline/'
     description = 'Grace Asset Pipeline Gradle Adapter.'
     tags = ['assets', 'resources', 'asset-pipeline']
 
