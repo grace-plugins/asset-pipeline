@@ -74,6 +74,9 @@ publishing {
     publications {
         maven(MavenPublication) {
             artifactId 'asset-pipeline-plugin'
+            artifact source: "${project.sourceSets.main.groovy.outputDir}/META-INF/grails-plugin.xml",
+                classifier: "plugin",
+                extension: 'xml'
             pom.withXml {
                 asNode().children().last() + {
                     resolveStrategy = Closure.DELEGATE_FIRST
