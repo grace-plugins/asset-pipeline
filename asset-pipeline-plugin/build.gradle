@@ -50,7 +50,7 @@ dependencies {
     implementation "org.graceframework:grace-web-taglib"
     implementation "org.graceframework:grace-web-url-mappings"
     implementation "commons-lang:commons-lang:2.6"
-    implementation "com.github.ben-manes.caffeine:caffeine:2.9.3"
+    implementation "com.github.ben-manes.caffeine:caffeine:3.1.6"
     compileOnly 'jakarta.servlet:jakarta.servlet-api:6.0.0'
     implementation project(':asset-pipeline-core'), {
         exclude group:'org.mozilla', module:'rhino'
