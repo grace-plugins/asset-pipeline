@@ -52,6 +52,7 @@ class AssetPipelinePlugin implements Plugin<Project> {
         config.cacheLocation = "${project.buildDir}/.assetcache"
         if (project.extensions.findByName('grails')) {
             defaultConfiguration.assetsPath = "${project.projectDir}/app/assets"
+            defaultConfiguration.skipNonDigests = true
         } else {
             defaultConfiguration.assetsPath = "${project.projectDir}/src/assets"
         }
