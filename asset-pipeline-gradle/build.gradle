@@ -70,7 +70,7 @@ dependencies {
     api localGroovy()
 
     api project(':asset-pipeline-core')
-    api 'com.google.javascript:closure-compiler-unshaded:v20210106'
+    api 'com.google.javascript:closure-compiler-unshaded:v20240317'
     testImplementation('org.spockframework:spock-core:2.3-groovy-3.0')
 }
 
