@@ -22,6 +22,9 @@ import org.gradle.api.tasks.CacheableTask
 @CompileStatic
 @CacheableTask  
 class AssetPluginPackage extends DefaultTask {
+    final String group = 'assets'
+    final String description = 'Assembles assets.'
+
     private String destinationDirectoryPath
     @Delegate(methodAnnotations = false) private AssetPipelineExtension pipelineExtension = new AssetPipelineExtensionImpl()
 

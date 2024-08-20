@@ -80,6 +80,8 @@ class AssetPipelinePlugin implements Plugin<Project> {
             }
 
             assetCleanTask.configure {
+                setGroup('assets')
+                setDescription('Deletes the assets directory.')
                 delete project.file(assetPipeline.compileDir)
             }
             def configDestinationDir = project.file(assetPipeline.compileDir)
