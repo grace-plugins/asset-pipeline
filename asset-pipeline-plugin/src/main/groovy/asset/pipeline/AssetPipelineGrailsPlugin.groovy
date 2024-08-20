@@ -34,7 +34,7 @@ class AssetPipelineGrailsPlugin extends grails.plugins.Plugin {
     def title           = "Asset Pipeline Plugin"
     def author          = "David Estes"
     def authorEmail     = "destes@bcap.com"
-    def description     = 'The Asset-Pipeline is a plugin used for managing and processing static assets in Grace applications. Asset-Pipeline functions include processing and minification of both CSS and JavaScript files.'
+    def description     = 'Asset-Pipeline is a plugin used for managing and processing static assets in Grace applications.'
     def documentation   = "https://github.com/grace-plugins/grace-asset-pipeline"
     def license         = "APACHE"
     def organization    = [ name: "Grace Plugins", url: "https://github.com/grace-plugins" ]
