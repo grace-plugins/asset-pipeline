@@ -63,6 +63,12 @@ bootRun {
     jvmArgs('-Dspring.output.ansi.enabled=always')
 }
 
+configure([compileGroovy, compileTestGroovy]) {
+    groovyOptions.fork(memoryInitialSize: '128M', memoryMaximumSize: '1G')
+    groovyOptions.encoding = "UTF-8"
+    options.encoding = "UTF-8"
+    options.compilerArgs << '-parameters'
+}
 
 jar {
     enabled = true
