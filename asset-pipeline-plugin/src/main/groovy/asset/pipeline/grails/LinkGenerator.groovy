@@ -1,22 +1,28 @@
 package asset.pipeline.grails
 
-import org.grails.web.mapping.DefaultLinkGenerator
-import grails.core.support.GrailsApplicationAware
-import grails.core.GrailsApplication
-import asset.pipeline.AssetHelper
-import asset.pipeline.AssetPipelineConfigHolder
+import groovy.transform.CompileStatic
 import groovy.util.logging.Commons
 
+import grails.core.GrailsApplication
+import org.grails.web.mapping.DefaultLinkGenerator
+
 @Commons
-class LinkGenerator extends DefaultLinkGenerator implements GrailsApplicationAware {
-	GrailsApplication grailsApplication
-	def assetProcessorService
+@CompileStatic
+class LinkGenerator extends DefaultLinkGenerator {
+	private GrailsApplication grailsApplication
+	private AssetProcessorService assetProcessorService
 
-
-	LinkGenerator(final String serverUrl) {
+	LinkGenerator(String serverUrl) {
 		super(serverUrl)
 	}
 
+	void setGrailsApplication(GrailsApplication grailsApplication) {
+		this.grailsApplication = grailsApplication
+	}
+
+	void setAssetProcessorService(AssetProcessorService assetProcessorService) {
+		this.assetProcessorService = assetProcessorService
+	}
 
 	@Override
 	String resource(final Map attrs) {

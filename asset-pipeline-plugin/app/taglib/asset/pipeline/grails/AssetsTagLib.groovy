@@ -15,7 +15,7 @@ class AssetsTagLib {
 	private static final LINE_BREAK = System.getProperty('line.separator') ?: '\n'
 
 	GrailsApplication grailsApplication
-	def assetProcessorService
+	AssetProcessorService assetProcessorService
 
 
 	/**
@@ -23,7 +23,7 @@ class AssetsTagLib {
 	 * @attr asset-defer OPTIONAL ensure script blocks are deferred to when the deferrred-scripts is used
 	 * @attr uniq OPTIONAL Output the script tag for the given resource only once per request, note that uniq mode cannot be bundled
 	 */
-	def javascript = {final attrs ->
+	def javascript = { attrs ->
 		final GrailsPrintWriter outPw = out
 		attrs.remove('href')
 		String type = attrs.remove('type') ?: 'text/javascript'
@@ -44,7 +44,7 @@ class AssetsTagLib {
 	 * @attr src  OPTIONAL alternate URL attribute, only used if {@code href} isn't supplied, or if {@code href} is Groovy false
 	 * @attr uniq OPTIONAL Output the stylesheet tag for the resource only once per request, note that uniq mode cannot be bundled
 	 */
-	def stylesheet = {final attrs ->
+	def stylesheet = { attrs ->
 		final GrailsPrintWriter outPw = out
 		element(attrs, 'css', 'text/css', Objects.toString(attrs.remove('href'), null)) {final String src, final String queryString, final outputAttrs, final String endOfLine, final boolean useManifest ->
 			outPw << '<link rel="stylesheet" href="' << assetPath(src: src, useManifest: useManifest) << queryString << '" ' << paramsToHtmlAttr(outputAttrs) << '/>'

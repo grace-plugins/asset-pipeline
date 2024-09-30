@@ -10,7 +10,7 @@ class AssetMethodTagLib {
 	static returnObjectForTags = ['assetPath']
 
 
-	def assetProcessorService
+	AssetProcessorService assetProcessorService
 
 
 	def assetPath = {final def attrs ->

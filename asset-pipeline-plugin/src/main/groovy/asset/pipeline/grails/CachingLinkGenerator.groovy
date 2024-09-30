@@ -1,9 +1,8 @@
 package asset.pipeline.grails
 
-import grails.core.support.GrailsApplicationAware
+import groovy.transform.CompileStatic
+
 import grails.core.GrailsApplication
-import asset.pipeline.AssetHelper
-import asset.pipeline.AssetPipelineConfigHolder
 import groovy.util.logging.Commons
 import org.grails.web.servlet.mvc.GrailsWebRequest
 
@@ -11,13 +10,22 @@ import static asset.pipeline.grails.utils.net.HttpServletRequests.getBaseUrlWith
 import static org.grails.web.servlet.mvc.GrailsWebRequest.lookup
 
 @Commons
-class CachingLinkGenerator extends org.grails.web.mapping.CachingLinkGenerator implements GrailsApplicationAware {
-	GrailsApplication grailsApplication
+@CompileStatic
+class CachingLinkGenerator extends org.grails.web.mapping.CachingLinkGenerator {
 
-	def assetProcessorService
+	private GrailsApplication grailsApplication
+	private AssetProcessorService assetProcessorService
 
 	CachingLinkGenerator(final String serverUrl) {
 		super(serverUrl)
+	}
+
+	void setGrailsApplication(GrailsApplication grailsApplication) {
+		this.grailsApplication = grailsApplication
+	}
+
+	void setAssetProcessorService(AssetProcessorService assetProcessorService) {
+		this.assetProcessorService = assetProcessorService
 	}
 
 	@Override

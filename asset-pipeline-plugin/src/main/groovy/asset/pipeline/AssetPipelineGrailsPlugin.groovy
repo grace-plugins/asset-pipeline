@@ -15,21 +15,15 @@
  */
 package asset.pipeline
 
-import asset.pipeline.AssetPipelineFilter
-import asset.pipeline.grails.AssetProcessorService
-import asset.pipeline.grails.LinkGenerator
-import asset.pipeline.grails.CachingLinkGenerator
-import asset.pipeline.grails.AssetResourceLocator
-import asset.pipeline.grails.fs.*
 import asset.pipeline.fs.*
-import asset.pipeline.*
+
+import grails.plugins.Plugin
 import grails.util.BuildSettings
 import org.grails.plugins.BinaryGrailsPlugin
 import groovy.util.logging.Commons
-import org.springframework.util.ClassUtils
 
 @Commons
-class AssetPipelineGrailsPlugin extends grails.plugins.Plugin {
+class AssetPipelineGrailsPlugin extends Plugin {
     def grailsVersion   = "2022.0.0 > *"
     def title           = "Asset Pipeline Plugin"
     def author          = "David Estes"
@@ -81,7 +75,6 @@ class AssetPipelineGrailsPlugin extends grails.plugins.Plugin {
         def manifestProps = new Properties()
         def manifestFile
 
-
         try {
             manifestFile = applicationContext.getResource("assets/manifest.properties")
             if(!manifestFile.exists()) {
@@ -100,7 +93,7 @@ class AssetPipelineGrailsPlugin extends grails.plugins.Plugin {
                 manifestProps.load(manifestFile.inputStream)
                 assetsConfig.manifest = manifestProps
                 AssetPipelineConfigHolder.manifest = manifestProps
-            } catch(e) {
+            } catch (ignored) {
                 log.warn "Failed to load Manifest"
             }
         }
@@ -113,35 +106,6 @@ class AssetPipelineGrailsPlugin extends grails.plugins.Plugin {
 
         if (BuildSettings.TARGET_DIR) {
             AssetPipelineConfigHolder.config.cacheLocation = new File((File) BuildSettings.TARGET_DIR, ".assetcache").canonicalPath
-        }
-        // Register Link Generator
-        String serverURL = config?.getProperty('grails.serverURL', String, null)
-        boolean cacheUrls = config?.getProperty('grails.web.linkGenerator.useCache', Boolean, true)
-
-        assetProcessorService(AssetProcessorService)
-        grailsLinkGenerator(cacheUrls ? CachingLinkGenerator : LinkGenerator, serverURL) { bean ->
-            bean.autowire = true
-        }
-
-        assetResourceLocator(AssetResourceLocator) { bean ->
-            bean.parent = "abstractGrailsResourceLocator"
-        }
-
-        def mapping = assetsConfig.containsKey('mapping') ? assetsConfig.mapping?.toString() : 'assets'
-
-        ClassLoader classLoader = application.classLoader
-        Class registrationBean = ClassUtils.isPresent("org.springframework.boot.web.servlet.FilterRegistrationBean", classLoader ) ?
-                                    ClassUtils.forName("org.springframework.boot.web.servlet.FilterRegistrationBean", classLoader) :
-                                    ClassUtils.forName("org.springframework.boot.context.embedded.FilterRegistrationBean", classLoader)
-        assetPipelineFilter(registrationBean) {
-            order = 0
-            filter = new asset.pipeline.AssetPipelineFilter()
-            if(!mapping) {
-                urlPatterns = ["/*".toString()]
-            } else {
-                urlPatterns = ["/${mapping}/*".toString()]
-            }
-            
         }
     }}
 }

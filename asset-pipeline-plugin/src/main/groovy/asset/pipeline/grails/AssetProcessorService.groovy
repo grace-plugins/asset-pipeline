@@ -6,7 +6,6 @@ import grails.core.GrailsApplication
 import grails.util.Environment
 import org.grails.config.NavigableMap
 
-import jakarta.annotation.Resource
 import jakarta.servlet.http.HttpServletRequest
 import org.grails.web.mapping.DefaultLinkGenerator
 import org.grails.web.servlet.mvc.GrailsWebRequest
@@ -23,12 +22,14 @@ import static org.grails.web.servlet.mvc.GrailsWebRequest.lookup
 
 class AssetProcessorService {
 
-	@Resource
 	GrailsApplication grailsApplication
 
-	@Resource
 	grails.web.mapping.LinkGenerator grailsLinkGenerator
 
+	AssetProcessorService(GrailsApplication grailsApplication, grails.web.mapping.LinkGenerator grailsLinkGenerator) {
+		this.grailsApplication = grailsApplication
+		this.grailsLinkGenerator = grailsLinkGenerator
+	}
 
 	/**
 	 * Retrieves the asset path from the property [grails.assets.mapping] which is used by the url mapping and the
