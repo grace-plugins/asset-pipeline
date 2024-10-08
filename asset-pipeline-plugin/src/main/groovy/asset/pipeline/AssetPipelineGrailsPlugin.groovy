@@ -24,7 +24,7 @@ import groovy.util.logging.Commons
 
 @Commons
 class AssetPipelineGrailsPlugin extends Plugin {
-    def grailsVersion   = "2022.0.0 > *"
+    def grailsVersion   = "2023.0.0 > *"
     def title           = "Asset Pipeline Plugin"
     def author          = "David Estes"
     def authorEmail     = "destes@bcap.com"
