@@ -15,32 +15,44 @@
  */
 package asset.pipeline;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
+import asset.pipeline.fs.ClasspathAssetResolver;
+import asset.pipeline.fs.FileSystemAssetResolver;
 import asset.pipeline.grails.AssetProcessorService;
 import asset.pipeline.grails.AssetResourceLocator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
 import asset.pipeline.grails.LinkGenerator;
 import asset.pipeline.grails.CachingLinkGenerator;
 import org.springframework.core.annotation.Order;
+import org.springframework.core.io.Resource;
 
 import grails.config.Config;
 import grails.config.Settings;
 import grails.core.GrailsApplication;
+import grails.plugins.GrailsPlugin;
+import grails.plugins.GrailsPluginManager;
 import grails.util.BuildSettings;
 import grails.util.Environment;
 import grails.web.mapping.UrlMappingsHolder;
+import org.grails.config.NavigableMap;
 import org.grails.core.io.ResourceLocator;
+import org.grails.plugins.BinaryGrailsPlugin;
 import org.grails.web.mapping.DefaultLinkGenerator;
 
 /**
@@ -52,6 +64,8 @@ import org.grails.web.mapping.DefaultLinkGenerator;
 @AutoConfiguration
 @AutoConfigureOrder
 public class AssetPipelineAutoConfiguration {
+
+    private static final Logger logger = LoggerFactory.getLogger(AssetPipelineAutoConfiguration.class);
 
     @Bean
     @Order(-20)
@@ -97,13 +111,75 @@ public class AssetPipelineAutoConfiguration {
 
     @Bean
     @SuppressWarnings("rawtypes")
-    public FilterRegistrationBean<AssetPipelineFilter> assetPipelineFilter(ObjectProvider<GrailsApplication> grailsApplication) {
+    public FilterRegistrationBean<AssetPipelineFilter> assetPipelineFilter(ObjectProvider<GrailsApplication> grailsApplication,
+            ObjectProvider<GrailsPluginManager> grailsPluginManager, ApplicationContext applicationContext) {
         Config config = grailsApplication.getObject().getConfig();
         Map assetsConfig = config.getProperty("grails.assets", Map.class, new HashMap());
+
+        Properties manifestProps = new Properties();
+        Resource manifestFile = null;
+        try {
+            manifestFile = applicationContext.getResource("assets/manifest.properties");
+            if (!manifestFile.exists()) {
+                manifestFile = applicationContext.getResource("classpath:assets/manifest.properties");
+            }
+        }
+        catch (Exception e) {
+            if (grailsApplication.getObject().isWarDeployed()) {
+                logger.warn("Unable to find asset-pipeline manifest, etags will not be properly generated");
+            }
+        }
+
+        boolean useManifest = assetsConfig.get("useManifest") == null || Boolean.parseBoolean((String) assetsConfig.get("useManifest"));
+        if (useManifest && manifestFile != null && manifestFile.exists()) {
+            try {
+                manifestProps.load(manifestFile.getInputStream());
+                assetsConfig.put("manifest", manifestProps);
+                AssetPipelineConfigHolder.manifest = manifestProps;
+            }
+            catch (Exception e) {
+                logger.warn("Failed to load manifest.properties");
+            }
+        }
+        else {
+            String assetsPath= config.getProperty("grails.assets.assetsPath", String.class, "app/assets");
+            FileSystemAssetResolver applicationResolver = new FileSystemAssetResolver("application", BuildSettings.BASE_DIR + "/" + assetsPath);
+            AssetPipelineConfigHolder.registerResolver(applicationResolver);
+            AssetPipelineConfigHolder.registerResolver(new ClasspathAssetResolver("classpath", "META-INF/assets", "META-INF/assets.list"));
+            AssetPipelineConfigHolder.registerResolver(new ClasspathAssetResolver("classpath", "META-INF/static"));
+            AssetPipelineConfigHolder.registerResolver(new ClasspathAssetResolver("classpath", "META-INF/resources"));
+            try {
+                for (GrailsPlugin plugin : grailsPluginManager.getObject().getAllPlugins()) {
+                    if (plugin instanceof BinaryGrailsPlugin) {
+                        File projectDirectory = ((BinaryGrailsPlugin) plugin).getProjectDirectory();
+                        if (projectDirectory != null) {
+                            String assetPath = new File(projectDirectory, assetsPath).getCanonicalPath();
+                            AssetPipelineConfigHolder.registerResolver(new FileSystemAssetResolver(plugin.getName(), assetPath));
+                        }
+                    }
+                }
+            }
+            catch (Exception e) {
+                logger.warn("Error loading exploded plugins", e);
+            }
+        }
+
+        if (assetsConfig instanceof NavigableMap) {
+            AssetPipelineConfigHolder.config = ((NavigableMap) assetsConfig).toFlatConfig();
+        }
+        else {
+            AssetPipelineConfigHolder.config = assetsConfig;
+        }
+        try {
+            if (BuildSettings.TARGET_DIR != null) {
+                AssetPipelineConfigHolder.config.put("cacheLocation", new File(BuildSettings.TARGET_DIR, ".assetcache").getCanonicalPath());
+            }
+        }
+        catch (Exception ignored) {
+        }
+
         String mapping = assetsConfig.containsKey("mapping") ? assetsConfig.get("mapping").toString() : "assets";
-
         AssetPipelineFilter filter = new AssetPipelineFilter();
-
         FilterRegistrationBean<AssetPipelineFilter> registration = new FilterRegistrationBean<>(filter);
         registration.setUrlPatterns(List.of(String.format("/%s/*", mapping)));
         registration.setOrder(0);
