@@ -33,6 +33,7 @@ import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -63,6 +64,7 @@ import org.grails.web.mapping.DefaultLinkGenerator;
  */
 @AutoConfiguration
 @AutoConfigureOrder
+@EnableConfigurationProperties(AssetPipelineProperties.class)
 public class AssetPipelineAutoConfiguration {
 
     private static final Logger logger = LoggerFactory.getLogger(AssetPipelineAutoConfiguration.class);
@@ -111,8 +113,9 @@ public class AssetPipelineAutoConfiguration {
 
     @Bean
     @SuppressWarnings("rawtypes")
-    public FilterRegistrationBean<AssetPipelineFilter> assetPipelineFilter(ObjectProvider<GrailsApplication> grailsApplication,
-            ObjectProvider<GrailsPluginManager> grailsPluginManager, ApplicationContext applicationContext) {
+    public FilterRegistrationBean<AssetPipelineFilter> assetPipelineFilter(AssetPipelineProperties assetPipelineProperties,
+            ObjectProvider<GrailsApplication> grailsApplication, ObjectProvider<GrailsPluginManager> grailsPluginManager,
+            ApplicationContext applicationContext) {
         Config config = grailsApplication.getObject().getConfig();
         Map assetsConfig = config.getProperty("grails.assets", Map.class, new HashMap());
 
@@ -130,7 +133,7 @@ public class AssetPipelineAutoConfiguration {
             }
         }
 
-        boolean useManifest = assetsConfig.get("useManifest") == null || Boolean.parseBoolean((String) assetsConfig.get("useManifest"));
+        boolean useManifest = assetPipelineProperties.isUseManifest();
         if (useManifest && manifestFile != null && manifestFile.exists()) {
             try {
                 manifestProps.load(manifestFile.getInputStream());
@@ -142,7 +145,7 @@ public class AssetPipelineAutoConfiguration {
             }
         }
         else {
-            String assetsPath= config.getProperty("grails.assets.assetsPath", String.class, "app/assets");
+            String assetsPath= assetPipelineProperties.getAssetsPath();
             FileSystemAssetResolver applicationResolver = new FileSystemAssetResolver("application", BuildSettings.BASE_DIR + "/" + assetsPath);
             AssetPipelineConfigHolder.registerResolver(applicationResolver);
             AssetPipelineConfigHolder.registerResolver(new ClasspathAssetResolver("classpath", "META-INF/assets", "META-INF/assets.list"));
@@ -178,7 +181,7 @@ public class AssetPipelineAutoConfiguration {
         catch (Exception ignored) {
         }
 
-        String mapping = assetsConfig.containsKey("mapping") ? assetsConfig.get("mapping").toString() : "assets";
+        String mapping = assetPipelineProperties.getMapping();
         AssetPipelineFilter filter = new AssetPipelineFilter();
         FilterRegistrationBean<AssetPipelineFilter> registration = new FilterRegistrationBean<>(filter);
         registration.setUrlPatterns(List.of(String.format("/%s/*", mapping)));
