@@ -30,7 +30,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -63,7 +62,6 @@ import org.grails.web.mapping.DefaultLinkGenerator;
  * @since 6.1
  */
 @AutoConfiguration
-@AutoConfigureOrder
 @EnableConfigurationProperties(AssetPipelineProperties.class)
 public class AssetPipelineAutoConfiguration {
 
