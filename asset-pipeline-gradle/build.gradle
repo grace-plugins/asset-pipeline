@@ -24,7 +24,7 @@ ext.isReleaseVersion = !version.endsWith('SNAPSHOT')
 ext.pomInfo = {
     delegate.name 'asset-pipeline-gradle'
     delegate.description 'JVM Asset Pipeline Gradle Adapter.'
-    delegate.url 'https://github.com/grace-plugins/asset-pipeline'
+    delegate.url 'https://github.com/grace-plugins/grace-asset-pipeline'
 
     delegate.licenses {
         delegate.license {
@@ -35,9 +35,9 @@ ext.pomInfo = {
     }
 
     delegate.scm {
-        delegate.url 'scm:git@github.com:grace-plugins/asset-pipeline.git'
-        delegate.connection 'scm:git@github.com:grace-plugins/asset-pipeline.git'
-        delegate.developerConnection 'scm:git@github.com:grace-plugins/asset-pipeline.git'
+        delegate.url 'scm:git@github.com:grace-plugins/grace-asset-pipeline.git'
+        delegate.connection 'scm:git@github.com:grace-plugins/grace-asset-pipeline.git'
+        delegate.developerConnection 'scm:git@github.com:grace-plugins/grace-asset-pipeline.git'
     }
 
     delegate.developers {
