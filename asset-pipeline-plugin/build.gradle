@@ -3,7 +3,6 @@ buildscript {
         // mavenLocal()
         mavenCentral()
         gradlePluginPortal()
-        maven { url 'https://repo.gradle.org/gradle/libs-releases' }
     }
     dependencies {
         classpath "org.graceframework:grace-gradle-plugin:$graceVersion"
