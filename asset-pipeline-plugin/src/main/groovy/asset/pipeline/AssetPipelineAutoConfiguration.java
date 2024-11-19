@@ -95,7 +95,7 @@ public class AssetPipelineAutoConfiguration {
 
     @Bean
     @Order
-    @ConditionalOnMissingBean(ResourceLocator.class)
+    @ConditionalOnMissingBean
     public AssetResourceLocator assetResourceLocator() throws IOException {
         AssetResourceLocator assetResourceLocator = new AssetResourceLocator();
         assetResourceLocator.setSearchLocations(List.of(BuildSettings.BASE_DIR.getCanonicalPath()));
