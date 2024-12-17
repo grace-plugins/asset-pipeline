@@ -51,7 +51,6 @@ import grails.util.BuildSettings;
 import grails.util.Environment;
 import grails.web.mapping.UrlMappingsHolder;
 import org.grails.config.NavigableMap;
-import org.grails.core.io.ResourceLocator;
 import org.grails.plugins.BinaryGrailsPlugin;
 import org.grails.web.mapping.DefaultLinkGenerator;
 
@@ -104,8 +103,8 @@ public class AssetPipelineAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public AssetProcessorService assetProcessorService(ObjectProvider<GrailsApplication> grailsApplication, grails.web.mapping.LinkGenerator grailsLinkGenerator) {
-        AssetProcessorService assetProcessorService = new AssetProcessorService(grailsApplication.getObject(), grailsLinkGenerator);
+    public AssetProcessorService assetProcessorService(ObjectProvider<GrailsApplication> grailsApplication) {
+        AssetProcessorService assetProcessorService = new AssetProcessorService(grailsApplication.getObject());
         return assetProcessorService;
     }
 
