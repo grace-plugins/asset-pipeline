@@ -20,8 +20,8 @@ group = 'org.graceframework.plugins'
 
 ext.isReleaseVersion = !version.endsWith('SNAPSHOT')
 ext.pomInfo = {
-    delegate.name 'asset-pipeline-gradle'
-    delegate.description 'JVM Asset Pipeline Gradle Adapter.'
+    delegate.name 'Asset Pipeline Gradle Plugin'
+    delegate.description 'Grace Asset Pipeline Gradle Plugin'
     delegate.url 'https://github.com/grace-plugins/grace-asset-pipeline'
 
     delegate.licenses {

@@ -88,8 +88,8 @@ publishing {
             pom.withXml {
                 asNode().children().last() + {
                     resolveStrategy = Closure.DELEGATE_FIRST
-                    name 'Asset Pipeline Plugin'
-                    description 'The Grace Asset-Pipeling plugin providing asset transpiling to grace.'
+                    name 'Grace Asset Pipeline Plugin'
+                    description 'The Grace Asset-Pipeling plugin providing asset transpiling to Grace.'
                     url 'https://github.com/grace-plugins/grace-asset-pipeline'
                     scm {
                         url 'https://github.com/grace-plugins/grace-asset-pipeline'

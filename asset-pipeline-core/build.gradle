@@ -80,8 +80,8 @@ publishing {
             pom.withXml {
                 asNode().children().last() + {
                     resolveStrategy = Closure.DELEGATE_FIRST
-                    name 'Asset Pipeline Core'
-                    description 'JVM Asset Pipeline library for serving static web assets, bundling, minifying, and extensibility for transpiling.'
+                    name 'Grace Asset Pipeline Core'
+                    description 'Grace Asset Pipeline library for serving static web assets, bundling, minifying, and extensibility for transpiling.'
                     url 'https://github.com/grace-plugins/grace-asset-pipeline'
                     scm {
                         url 'https://github.com/grace-plugins/grace-asset-pipeline'
