@@ -4,24 +4,20 @@ buildscript {
         gradlePluginPortal()
     }
     dependencies {
-        classpath 'com.gradle.publish:plugin-publish-plugin:0.15.0'
+        classpath("com.gradle.plugin-publish:com.gradle.plugin-publish.gradle.plugin:1.3.0")
     }
 }
 
 apply plugin: 'com.gradle.plugin-publish'
 apply plugin: 'groovy'
-apply plugin: 'maven-publish'
-apply plugin: 'signing'
-// apply plugin: 'java-library'
 apply plugin: 'java-gradle-plugin'
+apply plugin: 'maven-publish'
 apply plugin: 'idea'
 
 group = 'org.graceframework.plugins'
 
 ext.isReleaseVersion = !version.endsWith('SNAPSHOT')
 ext.pomInfo = {
-    delegate.name 'Asset Pipeline Gradle Plugin'
-    delegate.description 'Grace Asset Pipeline Gradle Plugin'
     delegate.url 'https://github.com/grace-plugins/grace-asset-pipeline'
 
     delegate.licenses {
@@ -70,20 +66,6 @@ dependencies {
     testImplementation('org.spockframework:spock-core:2.3-groovy-3.0')
 }
 
-// publishing {
-// 	publications {
-// 		maven(MavenPublication) {
-// 			artifactId 'asset-pipeline-gradle'
-// 			pom.withXml {
-// 				asNode().children().last() + pomInfo
-// 			from components.java
-// 		}
-// 	}
-// }
-
-
-
-
 task(console, dependsOn: 'classes', type: JavaExec) {
 main = 'groovy.ui.Console'
 classpath = sourceSets.main.runtimeClasspath
@@ -96,38 +78,41 @@ test {
     }
 }
 
-// The configuration example below shows the minimum required properties
-// configured to publish your plugin to the plugin portal
-pluginBundle {
+gradlePlugin {
     website = 'https://github.com/grace-plugins/grace-asset-pipeline/'
-    vcsUrl = 'https://github.com/grace-plugins/grace-asset-pipeline/'
-    description = 'Grace Asset Pipeline Gradle Adapter.'
-    tags = ['assets', 'resources', 'asset-pipeline']
+    vcsUrl = 'https://github.com/grace-plugins/grace-asset-pipeline/.git'
 
     plugins {
-        assetPipelinePlugin {
+        assetPipeline {
             id = 'org.graceframework.asset-pipeline'
-            displayName = 'Asset-Pipeline Plugin'
-            description = 'Grace Asset Pipeline Gradle Adapter.'
+            displayName = 'Grace Asset Pipeline Gradle Plugin'
+            description = 'Asset-Pipeline is a plugin used for managing and processing static assets in Grace applications primarily via Gradle.'
+            tags.set(['grace-framework', 'assets', 'asset-pipeline'])
+            implementationClass = 'asset.pipeline.gradle.AssetPipelinePlugin'
         }
     }
-    mavenCoordinates {
-        groupId = 'org.graceframework.plugins'
-    }
 }
-
 
 afterEvaluate {
     signing {
         required { isReleaseVersion && gradle.taskGraph.hasTask("publish") }
         sign(publishing.publications.pluginMaven)
     }
+}
 
-    publishing.publications.each { MavenPublication publication ->
-        if (publication.name != "maven") {
-            publication.pom.withXml {
-                def xml = asNode()
-                xml.children().last() + pomInfo
+project.afterEvaluate {
+    project.publishing.publications.each { MavenPublication publication->
+        publication.pom {
+            if (publication.name == "maven" || publication.name == "pluginMaven") {
+                name = "Grace Asset Pipeline Gradle Plugin"
+                description = "Asset-Pipeline is a plugin used for managing and processing static assets in Grace applications primarily via Gradle."
+            }
+
+            if (publication.name == "pluginMaven" || publication.name.endsWith("PluginMarkerMaven")) {
+                withXml {
+                    def xml = asNode()
+                    xml.children().last() + pomInfo
+                }
             }
         }
     }

@@ -9,8 +9,6 @@ buildscript {
     }
 }
 
-
-
 group "org.graceframework.plugins"
 
 apply plugin: 'eclipse'
@@ -20,7 +18,7 @@ apply plugin: 'java-library'
 apply plugin: "org.graceframework.grace-plugin"
 apply plugin: "org.graceframework.grace-gsp"
 apply plugin: "org.graceframework.grace-doc"
-// apply plugin: 'maven-publish'
+apply plugin: 'maven-publish'
 apply plugin: 'signing'
 
 ext {
@@ -115,11 +113,4 @@ publishing {
             from components.java
         }
     }
-}
-
-afterEvaluate {
-	signing {
-		required { isReleaseVersion && gradle.taskGraph.hasTask("publish") }
-		sign publishing.publications.maven
-	}
 }

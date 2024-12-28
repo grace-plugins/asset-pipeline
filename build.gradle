@@ -29,8 +29,17 @@ java {
 }
 
 subprojects { project ->
-	if (project.name != 'asset-pipeline-classpath-test' && project.name != 'asset-pipeline-docs' && project.name != 'asset-pipeline-site' && project.name != 'asset-pipeline-gradle') {
-    
+	if (project.name != 'asset-pipeline-classpath-test' && project.name != 'asset-pipeline-docs' && project.name != 'asset-pipeline-gradle') {
+        afterEvaluate {
+            signing {
+                required { isReleaseVersion && gradle.taskGraph.hasTask("publish") }
+                sign publishing.publications.maven
+            }
+        }
+
+        tasks.withType(Sign) {
+            onlyIf { isReleaseVersion }
+        }
     }
 }
 

@@ -6,8 +6,6 @@ buildscript {
     }
 }
 
-
-
 apply plugin: 'java-library'
 apply plugin: 'groovy'
 apply plugin: 'maven-publish'
@@ -17,7 +15,6 @@ apply plugin: 'signing'
 group = 'org.graceframework.plugins'
 
 ext.isReleaseVersion = !version.endsWith('SNAPSHOT')
-
 
 repositories {
     mavenCentral()
@@ -109,24 +106,14 @@ publishing {
     }
 }
 
-
 task(console, dependsOn: 'classes', type: JavaExec) {
   main = 'groovy.ui.Console'
   classpath = sourceSets.main.runtimeClasspath
 }
 
-
 test {
     testLogging {
         exceptionFormat = 'full'
         showStandardStreams = true
-    }
-}
-
-
-afterEvaluate {
-    signing {
-        required { isReleaseVersion && gradle.taskGraph.hasTask("publish") }
-        sign publishing.publications.maven
     }
 }
