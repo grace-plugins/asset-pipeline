@@ -83,8 +83,16 @@ publishing {
             artifact source: "${project.sourceSets.main.groovy.classesDirectory.get()}/META-INF/grails-plugin.xml",
                 classifier: "plugin",
                 extension: 'xml'
+
             pom.withXml {
-                asNode().children().last() + {
+                def pomNode = asNode()
+
+                try {
+                    pomNode.dependencyManagement.replaceNode {}
+                } catch (Throwable ignore) {
+                }
+
+                pomNode.children().last() + {
                     resolveStrategy = Closure.DELEGATE_FIRST
                     name 'Grace Asset Pipeline Plugin'
                     description 'The Grace Asset-Pipeling plugin providing asset transpiling to Grace.'
