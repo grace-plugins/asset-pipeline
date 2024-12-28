@@ -79,8 +79,8 @@ test {
 }
 
 gradlePlugin {
-    website = 'https://github.com/grace-plugins/grace-asset-pipeline/'
-    vcsUrl = 'https://github.com/grace-plugins/grace-asset-pipeline/.git'
+    website = 'https://github.com/grace-plugins/grace-asset-pipeline'
+    vcsUrl = 'https://github.com/grace-plugins/grace-asset-pipeline.git'
 
     plugins {
         assetPipeline {
