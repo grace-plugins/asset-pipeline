@@ -96,7 +96,9 @@ gradlePlugin {
 afterEvaluate {
     signing {
         required { isReleaseVersion && gradle.taskGraph.hasTask("publish") }
-        sign(publishing.publications.pluginMaven)
+        Publication[] publications = new Publication[publishing.publications.size()]
+        publishing.publications.findAll().toArray(publications)
+        sign(publications)
     }
 }
 
