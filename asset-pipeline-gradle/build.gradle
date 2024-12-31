@@ -66,11 +66,6 @@ dependencies {
     testImplementation('org.spockframework:spock-core:2.3-groovy-4.0')
 }
 
-task(console, dependsOn: 'classes', type: JavaExec) {
-main = 'groovy.ui.Console'
-classpath = sourceSets.main.runtimeClasspath
-}
-
 test {
     testLogging {
         exceptionFormat = 'full'
