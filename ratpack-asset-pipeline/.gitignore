@@ -1,6 +1,0 @@
-build/
-.gradle
-gradle.properties
-*.ipr
-*.iws
-*.iml
