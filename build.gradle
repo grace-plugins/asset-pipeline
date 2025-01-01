@@ -1,11 +1,11 @@
 plugins {
-	id 'java'
-	id 'groovy'
-	id 'java-library'
+    id 'java'
+    id 'groovy'
+    id 'java-library'
     id 'signing'
     id 'idea'
     id 'maven-publish'
-	id('io.github.gradle-nexus.publish-plugin') version '2.0.0'
+    id('io.github.gradle-nexus.publish-plugin') version '2.0.0'
 }
 
 ext."signing.keyId" = project.hasProperty("signing.keyId") ? project.getProperty('signing.keyId') : System.getenv('SIGNING_KEY')
@@ -20,16 +20,16 @@ ext {
 group = 'org.graceframework.plugins'
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 java {
-	withJavadocJar()
-	withSourcesJar()
+    withJavadocJar()
+    withSourcesJar()
 }
 
 subprojects { project ->
-	if (project.name != 'asset-pipeline-classpath-test' && project.name != 'asset-pipeline-docs' && project.name != 'asset-pipeline-gradle') {
+    if (project.name != 'asset-pipeline-classpath-test' && project.name != 'asset-pipeline-docs' && project.name != 'asset-pipeline-gradle') {
         afterEvaluate {
             signing {
                 required { isReleaseVersion && gradle.taskGraph.hasTask("publish") }
@@ -43,18 +43,11 @@ subprojects { project ->
     }
 }
 
-dependencies {
-	api "org.codehaus.groovy:groovy:$groovyVersion"
-	api "org.codehaus.groovy:groovy-templates:$groovyVersion"
-	api 'org.mozilla:rhino:1.7R4'
-	testImplementation 'org.spockframework:spock-core:2.3-groovy-3.0'
-}
-
 test {
-	testLogging {
-		exceptionFormat = 'full'
-		showStandardStreams = true
-	}
+    testLogging {
+        exceptionFormat = 'full'
+        showStandardStreams = true
+    }
 }
 
 nexusPublishing {
