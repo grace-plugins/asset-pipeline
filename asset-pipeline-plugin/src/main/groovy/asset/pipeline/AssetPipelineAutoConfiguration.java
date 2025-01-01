@@ -52,7 +52,6 @@ import grails.util.Environment;
 import grails.web.mapping.UrlMappingsHolder;
 import org.grails.config.NavigableMap;
 import org.grails.plugins.BinaryGrailsPlugin;
-import org.grails.web.mapping.DefaultLinkGenerator;
 
 /**
  * {@link EnableAutoConfiguration Auto-configuration} for Asset Pipeline
@@ -66,10 +65,10 @@ public class AssetPipelineAutoConfiguration {
 
     private static final Logger logger = LoggerFactory.getLogger(AssetPipelineAutoConfiguration.class);
 
-    @Bean
     @Order(-20)
-    @ConditionalOnMissingBean(grails.web.mapping.LinkGenerator.class)
-    public DefaultLinkGenerator assetLinkGenerator(ObjectProvider<GrailsApplication> grailsApplication,
+    @Bean({"linkGenerator", "grailsLinkGenerator", "assetLinkGenerator"})
+    @ConditionalOnMissingBean
+    public grails.web.mapping.LinkGenerator assetLinkGenerator(ObjectProvider<GrailsApplication> grailsApplication,
             ObjectProvider<UrlMappingsHolder> grailsUrlMappingsHolder, ObjectProvider<AssetProcessorService> assetProcessorService) {
         Config config = grailsApplication.getObject().getConfig();
         boolean isReloadEnabled = Environment.isDevelopmentMode() || Environment.getCurrent().isReloadEnabled();
