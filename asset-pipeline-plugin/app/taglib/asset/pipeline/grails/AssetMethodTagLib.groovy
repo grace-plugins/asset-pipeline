@@ -1,34 +1,33 @@
 package asset.pipeline.grails
 
-
-import static asset.pipeline.grails.UrlBase.*
-
-
 class AssetMethodTagLib {
 
 	static namespace           = 'g'
 	static returnObjectForTags = ['assetPath']
 
-
 	AssetProcessorService assetProcessorService
-
+	grails.web.mapping.LinkGenerator grailsLinkGenerator
 
 	def assetPath = {final def attrs ->
 		final def     src
-		final UrlBase urlBase
+		final String baseUrl
 		final boolean useManifest
 
 		if (attrs instanceof Map) {
 			src         = attrs.src
-			urlBase     = attrs.absolute ? SERVER_BASE_URL : CONTEXT_PATH
+			baseUrl     = attrs.absolute ? grailsLinkGenerator.serverBaseURL : trimToEmpty(grailsLinkGenerator.contextPath)
 			useManifest = attrs.useManifest ?: true
 		}
 		else {
 			src         = attrs
-			urlBase     = CONTEXT_PATH
-            useManifest = true
+			baseUrl     = trimToEmpty(grailsLinkGenerator.contextPath)
+			useManifest = true
 		}
 
-		return assetProcessorService.assetBaseUrl(request, urlBase) + assetProcessorService.getAssetPath(Objects.toString(src), useManifest)
+		return assetProcessorService.assetBaseUrl(request, baseUrl) + assetProcessorService.getAssetPath(Objects.toString(src), useManifest)
+	}
+
+	private static String trimToEmpty(String str) {
+		return str == null ? "" : str.trim()
 	}
 }
