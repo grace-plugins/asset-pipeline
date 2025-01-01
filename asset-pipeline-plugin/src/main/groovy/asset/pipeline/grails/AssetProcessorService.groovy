@@ -39,8 +39,8 @@ class AssetProcessorService {
 		// final String mapping = grailsApplication.config?.grails?.assets?.mapping ?: 'assets'
 		if (mapping.contains('/')) {
 			throw new IllegalArgumentException(
-				'The property [grails.assets.mapping] can only be one level deep.  ' +
-				"For example, 'foo' and 'bar' would be acceptable values, but 'foo/bar' is not"
+					'The property [grails.assets.mapping] can only be one level deep.  ' +
+							"For example, 'foo' and 'bar' would be acceptable values, but 'foo/bar' is not"
 			)
 		}
 		return mapping
@@ -64,7 +64,7 @@ class AssetProcessorService {
 		final String relativePath = trimLeadingSlash(path)
 		if(manifest) {
 			if(relativePath)
-			return manifest.getProperty(relativePath)
+				return manifest.getProperty(relativePath)
 		} else {
 			return AssetHelper.fileForFullName(relativePath) != null ? relativePath : null
 		}
@@ -88,9 +88,9 @@ class AssetProcessorService {
 			return manifest?.getProperty(registryRelativePath) ? true : false
 		} else {
 			return (manifest ? manifest.getProperty(relativePath) : AssetHelper.fileForFullName(relativePath) != null)
-		}	
+		}
 
-		
+
 	}
 
 
@@ -135,9 +135,9 @@ class AssetProcessorService {
 		final String mapping = assetMapping
 
 		final String finalUrl = ensureEndsWith(new StringBuilder(baseUrl.length() + mapping.length() + 2).append(baseUrl), '/' as char)
-			.append(mapping)
-			.append('/' as char)
-			.toString()
+				.append(mapping)
+				.append('/' as char)
+				.toString()
 
 		return finalUrl
 	}
