@@ -32,7 +32,7 @@ subprojects { project ->
     if (project.name != 'asset-pipeline-classpath-test' && project.name != 'asset-pipeline-docs' && project.name != 'asset-pipeline-gradle') {
         afterEvaluate {
             signing {
-                required { isReleaseVersion && gradle.taskGraph.hasTask("publish") }
+                required = isReleaseVersion && gradle.taskGraph.hasTask("publish")
                 sign publishing.publications.maven
             }
         }

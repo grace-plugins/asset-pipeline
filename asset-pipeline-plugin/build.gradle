@@ -9,7 +9,7 @@ buildscript {
     }
 }
 
-group "org.graceframework.plugins"
+group = "org.graceframework.plugins"
 
 apply plugin: 'eclipse'
 apply plugin: 'idea'
@@ -64,10 +64,11 @@ bootRun {
 }
 
 configure([compileGroovy, compileTestGroovy]) {
-    groovyOptions.fork(memoryInitialSize: '128M', memoryMaximumSize: '1G')
     groovyOptions.encoding = "UTF-8"
     options.encoding = "UTF-8"
     options.compilerArgs << '-parameters'
+    options.forkOptions.memoryInitialSize = '128M'
+    options.forkOptions.memoryMaximumSize = '1G'
 }
 
 jar {
@@ -79,7 +80,7 @@ jar {
 publishing {
     publications {
         maven(MavenPublication) {
-            artifactId 'asset-pipeline-plugin'
+            artifactId = 'asset-pipeline-plugin'
             artifact source: "${project.sourceSets.main.groovy.classesDirectory.get()}/META-INF/grails-plugin.xml",
                 classifier: "plugin",
                 extension: 'xml'

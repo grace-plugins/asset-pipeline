@@ -1,39 +1,21 @@
-buildscript {
- repositories {
-        mavenLocal()
-    }
-    dependencies {
-
-    }
-}
-group = 'org.graceframework.plugins'
-
 apply plugin: 'groovy'
-
-// apply plugin: 'asset-pipeline'
-
-
-version "0.1"
-
-sourceCompatibility = '1.11'
-targetCompatibility = '1.11'
-
-// assets {
-// 	packagePlugin = true
-// }
-
-configurations {
-	provided
-}
 
 ext.isReleaseVersion = !version.endsWith('SNAPSHOT')
 
+group = 'org.graceframework.plugins'
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
-
 dependencies {
-	compileOnly localGroovy()
+    compileOnly localGroovy()
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+    withSourcesJar()
+    withJavadocJar()
 }

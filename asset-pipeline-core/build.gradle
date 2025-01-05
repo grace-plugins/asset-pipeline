@@ -42,8 +42,8 @@ java {
 }
 
 groovydoc {
-    docTitle "Asset Pipeline Core"
-    windowTitle "Asset Pipeline For the JVM API Doc"
+    docTitle = "Asset Pipeline Core"
+    windowTitle = "Asset Pipeline For the JVM API Doc"
     groovyClasspath = configurations.doc
     classpath = configurations.runtime
     // Links to external Javadoc, currently only the J2SE links are working properly 
@@ -73,7 +73,7 @@ dependencies {
 publishing {
     publications {
         maven(MavenPublication) {
-            artifactId 'asset-pipeline-core'
+            artifactId = 'asset-pipeline-core'
             pom.withXml {
                 asNode().children().last() + {
                     resolveStrategy = Closure.DELEGATE_FIRST
