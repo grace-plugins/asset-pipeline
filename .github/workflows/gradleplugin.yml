@@ -8,7 +8,7 @@ permissions: {}
 jobs:
   publish_plugins:
     if: ${{ github.repository == 'grace-plugins/grace-asset-pipeline' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         java: ['17']
