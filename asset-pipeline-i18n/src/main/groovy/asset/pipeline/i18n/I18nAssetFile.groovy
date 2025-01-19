@@ -46,7 +46,7 @@ class I18nAssetFile extends AbstractAssetFile {
         'application/javascript', 'application/x-javascript', 'text/javascript'
     ]
     static List<String> extensions = ['i18n']
-    static List<Class<Processor>> processors = [I18nProcessor]
+    static List<Class<? extends Processor>> processors = [I18nProcessor]
 
 
     //-- Fields ---------------------------------

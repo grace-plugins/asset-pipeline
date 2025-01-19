@@ -105,7 +105,7 @@ class I18nProcessor extends AbstractProcessor {
     String process(String inputText, AssetFile assetFile) {
         Matcher m = assetFile.name =~ /(\w+?)(_\w+)?\.i18n$/
         
-        def options = []
+        List<String> options = []
         
         if(m){
             def baseFile = m.group(1)
@@ -257,9 +257,9 @@ class I18nProcessor extends AbstractProcessor {
      * <ul>
      *   <li>in classpath with extension {@code .properties}</li>
      *   <li>in classpath with extension {@code .xml}</li>
-     *   <li>in file system in folder {@code grails-app/i18n} with extension
+     *   <li>in file system in folder {@code app/i18n} with extension
      * {@code .properties}</li>
-     *   <li>in file system in folder {@code grails-app/i18n} with extension
+     *   <li>in file system in folder {@code app/i18n} with extension
      * {@code .xml}</li>
      * </ul>
      *
@@ -276,12 +276,12 @@ class I18nProcessor extends AbstractProcessor {
         } 
         if (!resource.exists()) {
             resource = resourceLoader.getResource(
-                    "file:grails-app/i18n/${fileName}${PROPERTIES_SUFFIX}"
+                    "file:app/i18n/${fileName}${PROPERTIES_SUFFIX}"
             )
         } 
         if (!resource.exists()) {
             resource = resourceLoader.getResource(
-                    "file:grails-app/i18n/${fileName}${XML_SUFFIX}"
+                    "file:app/i18n/${fileName}${XML_SUFFIX}"
             )
         } 
         String i18nPath = AssetPipelineConfigHolder.config.i18nPath
@@ -330,7 +330,7 @@ class I18nProcessor extends AbstractProcessor {
             for(GrailsPlugin plugin in pluginManager.allPlugins){
                 if(plugin instanceof BinaryGrailsPlugin){
                     String projectDir = ((BinaryGrailsPlugin)plugin).projectDirectory
-                    String i18nPropertiesPath = new File(projectDir,"grails-app/i18n").canonicalPath
+                    String i18nPropertiesPath = new File(projectDir,"app/i18n").canonicalPath
                     
                     if(new File(i18nPropertiesPath,filename+PROPERTIES_SUFFIX).exists()){
                         result = new FileSystemResource(new File(i18nPropertiesPath,filename+PROPERTIES_SUFFIX))

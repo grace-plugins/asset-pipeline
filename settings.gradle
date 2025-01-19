@@ -1,1 +1,1 @@
-include 'asset-pipeline-core', 'asset-pipeline-gradle', 'asset-pipeline-classpath-test', 'asset-pipeline-plugin'
+include 'asset-pipeline-core', 'asset-pipeline-gradle', 'asset-pipeline-classpath-test', 'asset-pipeline-plugin', 'asset-pipeline-i18n'

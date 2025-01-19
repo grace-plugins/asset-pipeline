@@ -1,6 +1,6 @@
 # I18n asset-pipeline plugin
 
-The Grails plugin `i18n-asset-pipeline` is an asset-pipeline plugin that
+This plugin `asset-pipeline-i18n` is an asset-pipeline plugin that
 generates a JavaScript file with localized texts which can be used for
 client-side i18n.
 
@@ -12,11 +12,9 @@ For more information on how to use asset-pipeline, visit
 Because `asset-pipeline` 2.x and 3.x introduced new APIs and aren't backward
 compatible, you must use the following versions of this plugin:
 
-i18n-asset-pipeline version | required for
+asset-pipeline-i18n version | required for
 ----------------------------|--------------
- 0.x                        | `asset-pipeline` up to version 1.9.9
- 1.x                        | `asset-pipeline` version 2.0.0 or higher
- 2.x                        | Grails 3.x
+ 6.3.x                      | Grace 2023.3.x
 
 
 ## Breaking update information 2.1.0
@@ -39,12 +37,12 @@ To use this plugin you have to add the following code to your `build.gradle`:
 ```groovy
 buildscript {
     dependencies {
-        classpath 'org.amcworld.plugins:i18n-asset-pipeline:2.1.0-SNAPSHOT'
+        classpath 'org.graceframework.plugins:asset-pipeline-i18n:6.3.0-SNAPSHOT'
     }
 }
 
 dependencies {
-    runtime 'org.grails.plugins:i18n-asset-pipeline:2.1.0-SNAPSHOT'
+    runtime 'org.graceframework.plugins:asset-pipeline-i18n:6.3.0-SNAPSHOT'
 }
 ```
 
@@ -56,7 +54,7 @@ mode.
 ## Usage
 
 `i18n-asset-pipeline` uses special files in your asset folders (we recommend
-`grails-app/assets/i18n`) with extension '.i18n'.  The names of
+`app/assets/i18n`) with extension '.i18n'.  The names of
 these files must contain a language specification separated by underscore, e.
 g. `messages_de.i18n` or `messages_en_UK.i18n`.  Files without a language
 specification (e. g. `messages.i18n`) are files for the default locale.  These
@@ -88,7 +86,7 @@ assets such as JavaScript files.
 ## Typical file structure
 
 Typically, you have one i18n file for each language in the application.  Given,
-you have the following message resources in `grails-app/i18n`:
+you have the following message resources in `app/i18n`:
 
 * `messages.properties`
 * `messages_de.properties`
@@ -96,7 +94,7 @@ you have the following message resources in `grails-app/i18n`:
 * `messages_es.properties`
 * `messages_fr.properties`
 
-Then, you should have the same set of files in e. g. `grails-app/assets/i18n`:
+Then, you should have the same set of files in e. g. `app/assets/i18n`:
 
 * `messages.i18n`
 * `messages_de.i18n`
@@ -171,7 +169,3 @@ Updated by [Dennie de Lange](mailto:dennie@tkvw.nl).
 
 This plugin was published under the
 [Apache License, Version 2.0][apache-license].
-
-[amc-world]: http://www.amc-world.de
-[apache-license]: http://www.apache.org/licenses/LICENSE-2.0
-[asset-pipeline]: http://www.github.com/bertramdev/asset-pipeline
